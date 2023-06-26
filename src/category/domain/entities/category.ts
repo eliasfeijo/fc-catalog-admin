@@ -37,4 +37,17 @@ export class Category extends Entity<CategoryProperties> {
   get created_at() {
     return this.props.created_at;
   }
+
+  update(props: { name?: string; description?: string }) {
+    this.props.name = props.name ?? this.props.name;
+    this.description = props.description;
+  }
+
+  activate() {
+    this.is_active = true;
+  }
+
+  deactivate() {
+    this.is_active = false;
+  }
 }

@@ -2,7 +2,7 @@ import { UniqueEntityId } from "../../../@shared/domain/value-objects/unique-ent
 import { Category } from "./category";
 
 describe("Category Unit Tests", () => {
-  test("constructor of Category", () => {
+  test("constructor", () => {
     const category = new Category({
       name: "Category Name",
     });
@@ -32,7 +32,7 @@ describe("Category Unit Tests", () => {
     expect(category2.created_at).toBe(created_at);
   });
 
-  test("setters of Category", () => {
+  test("setters", () => {
     const category = new Category({
       name: "Category Name",
     });
@@ -45,5 +45,39 @@ describe("Category Unit Tests", () => {
     expect(category.is_active).toBeFalsy();
     category["is_active"] = undefined;
     expect(category.is_active).toBeTruthy();
+  });
+
+  test("update", () => {
+    const category = new Category({
+      name: "Category Name",
+    });
+    category.update({
+      name: "Category Name 2",
+      description: "Category Description",
+    });
+    expect(category.name).toBe("Category Name 2");
+    expect(category.description).toBe("Category Description");
+    category.update({});
+    expect(category.name).toBe("Category Name 2");
+    expect(category.description).toBe(null);
+  });
+
+  test("activate", () => {
+    const category = new Category({
+      name: "Category Name",
+    });
+    category["is_active"] = false;
+    expect(category.is_active).toBeFalsy();
+    category.activate();
+    expect(category.is_active).toBeTruthy();
+  });
+
+  test("deactivate", () => {
+    const category = new Category({
+      name: "Category Name",
+    });
+    expect(category.is_active).toBeTruthy();
+    category.deactivate();
+    expect(category.is_active).toBeFalsy();
   });
 });
