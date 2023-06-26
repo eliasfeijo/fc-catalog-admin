@@ -10,7 +10,7 @@ export default abstract class Entity<Props> {
     return this.uniqueEntityId.value;
   }
 
-  toJSON() {
-    return { id: this.id, ...this.props };
+  toJSON(): Required<{ id: string } & Props> {
+    return { id: this.id, ...this.props } as Required<{ id: string } & Props>;
   }
 }
