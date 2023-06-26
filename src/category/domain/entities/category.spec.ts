@@ -8,7 +8,7 @@ describe("Category Unit Tests", () => {
     });
     expect(category.id).toBeDefined();
     expect(category.id).not.toBeNull();
-    expect(category.id).toBeInstanceOf(UniqueEntityId);
+    expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     expect(category.name).toBe("Category Name");
     expect(category.description).toBeNull();
     expect(category.is_active).toBeTruthy();
@@ -25,7 +25,7 @@ describe("Category Unit Tests", () => {
       },
       id
     );
-    expect(category2.id).toBe(id);
+    expect(category2.uniqueEntityId).toBe(id);
     expect(category2.name).toBe("Category Name 2");
     expect(category2.description).toBe("Category Description");
     expect(category2.is_active).toBeFalsy();
