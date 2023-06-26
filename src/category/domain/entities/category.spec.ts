@@ -1,22 +1,31 @@
-import Category from "./category";
+import { UniqueEntityId } from "../../../@shared/domain/unique-entity-id.vo";
+import { Category } from "./category";
 
 describe("Category Unit Tests", () => {
   test("constructor of Category", () => {
     const category = new Category({
       name: "Category Name",
     });
+    expect(category.id).toBeDefined();
+    expect(category.id).not.toBeNull();
+    expect(category.id).toBeInstanceOf(UniqueEntityId);
     expect(category.name).toBe("Category Name");
     expect(category.description).toBeNull();
     expect(category.is_active).toBeTruthy();
     expect(category.created_at).toBeInstanceOf(Date);
 
     const created_at = new Date();
-    const category2 = new Category({
-      name: "Category Name 2",
-      description: "Category Description",
-      is_active: false,
-      created_at,
-    });
+    const id = new UniqueEntityId("783f7287-905a-4e42-91bd-2d3e9f8c815d");
+    const category2 = new Category(
+      {
+        name: "Category Name 2",
+        description: "Category Description",
+        is_active: false,
+        created_at,
+      },
+      id
+    );
+    expect(category2.id).toBe(id);
     expect(category2.name).toBe("Category Name 2");
     expect(category2.description).toBe("Category Description");
     expect(category2.is_active).toBeFalsy();
