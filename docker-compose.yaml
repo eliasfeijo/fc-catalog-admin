@@ -5,3 +5,4 @@ services:
     build: .
     volumes:
       - .:/home/node/app
+      - ./.docker/zsh/history:/home/node/zsh:delegated
