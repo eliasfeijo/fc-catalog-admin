@@ -26,7 +26,8 @@
 				"esbenp.prettier-vscode",
 				"ms-azuretools.vscode-docker",
 				"eamodio.gitlens",
-				"SonarSource.sonarlint-vscode"
+				"SonarSource.sonarlint-vscode",
+				"firsttris.vscode-jest-runner"
 			]
 		}
 	},
