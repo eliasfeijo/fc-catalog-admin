@@ -1,3 +1,4 @@
+import ValidatorRules from "../../../@shared/validators/validator-rules";
 import Entity from "../../../@shared/domain/entities/entity";
 import { UniqueEntityId } from "../../../@shared/domain/value-objects/unique-entity-id.vo";
 
@@ -10,6 +11,7 @@ export type CategoryProperties = {
 
 export class Category extends Entity<CategoryProperties> {
   constructor(props: CategoryProperties, id?: UniqueEntityId) {
+    Category.validate(props);
     super(props, id);
     this.description = props.description;
     this.is_active = props.is_active;
@@ -38,8 +40,22 @@ export class Category extends Entity<CategoryProperties> {
     return this.props.created_at;
   }
 
-  update(props: { name?: string; description?: string }) {
-    this.props.name = props.name ?? this.props.name;
+  private static validate(
+    props: Pick<CategoryProperties, "name" | "description" | "is_active">
+  ) {
+    ValidatorRules.values(props.name, "name")
+      .isRequired()
+      .isString()
+      .maxLength(255);
+    ValidatorRules.values(props.description, "description")
+      .isString()
+      .maxLength(255);
+    ValidatorRules.values(props.is_active, "is_active").isBoolean();
+  }
+
+  update(props: Required<Pick<CategoryProperties, "name" | "description">>) {
+    Category.validate(props);
+    this.props.name = props.name;
     this.description = props.description;
   }
 

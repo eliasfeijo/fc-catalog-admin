@@ -2,10 +2,15 @@ import { UniqueEntityId } from "../../../@shared/domain/value-objects/unique-ent
 import { Category } from "./category";
 
 describe("Category Unit Tests", () => {
+  beforeEach(() => {
+    Category["validate"] = jest.fn();
+  });
+
   test("constructor", () => {
     const category = new Category({
       name: "Category Name",
     });
+    expect(Category["validate"]).toBeCalledTimes(1);
     expect(category.id).toBeDefined();
     expect(category.id).not.toBeNull();
     expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
@@ -55,10 +60,11 @@ describe("Category Unit Tests", () => {
       name: "Category Name 2",
       description: "Category Description",
     });
+    expect(Category["validate"]).toBeCalledTimes(2);
     expect(category.name).toBe("Category Name 2");
     expect(category.description).toBe("Category Description");
-    category.update({});
-    expect(category.name).toBe("Category Name 2");
+    category.update({ name: "Category Name 3", description: undefined });
+    expect(category.name).toBe("Category Name 3");
     expect(category.description).toBe(null);
   });
 
